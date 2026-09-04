@@ -154,11 +154,11 @@ void swift_get_clock_res(
 switch (clock_id) {
     case swift_clock_id_continuous: {
       struct timespec continuous;
-#if defined(__linux__)
+#if (defined(__linux__) || defined(__OpenBSD__))
       clock_getres(CLOCK_BOOTTIME, &continuous);
 #elif defined(__APPLE__)
       clock_getres(CLOCK_MONOTONIC_RAW, &continuous);
-#elif (defined(__OpenBSD__) || defined(__FreeBSD__) || defined(__wasi__) || defined(__EMSCRIPTEN__))
+#elif (defined(__FreeBSD__) || defined(__wasi__) || defined(__EMSCRIPTEN__))
       clock_getres(CLOCK_MONOTONIC, &continuous);
 #elif defined(_WIN32)
       continuous.tv_sec = 0;
